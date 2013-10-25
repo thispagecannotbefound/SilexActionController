@@ -1,0 +1,17 @@
+{
+	"name": "thispagecannotbefound/silex-action-controller",
+	"description": "Service provider for extended (class-) controller functionality.",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Abel de Beer",
+			"email": "abel@thispagecannotbefound.com"
+		}
+	],
+	"require": {
+		"silex/silex": "1.*"
+	},
+	"autoload": {
+		"psr-0": {"ThisPageCannotBeFound": "src/"}
+	}
+}
