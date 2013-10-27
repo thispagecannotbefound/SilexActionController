@@ -13,7 +13,14 @@ class ActionControllerResolver implements ControllerResolverInterface {
 
 	const SERVICE_PATTERN = "/^([\w\.\-]+)(:[a-z_\x7f-\xff][\w\x7f-\xff]*)?$/i";
 
+	/**
+	 * @var ControllerResolverInterface
+	 */
 	protected $resolver;
+
+	/**
+	 * @var Application
+	 */
 	protected $app;
 
 	/**
@@ -60,10 +67,9 @@ class ActionControllerResolver implements ControllerResolverInterface {
 		}
 
 		$class = $this->app[$service];
-		$isObject = is_object($class);
 
 		// create instance if value is class name
-		if (!$isObject) {
+		if (!is_object($class)) {
 			if (!class_exists($class)) {
 				throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.',
 						$class));
@@ -76,6 +82,10 @@ class ActionControllerResolver implements ControllerResolverInterface {
 		if (!method_exists($class, $method) &&
 				method_exists($class, $method . 'Action')) {
 			$method .= 'Action';
+		}
+
+		if ($class instanceof ApplicationAwareInterface) {
+			$class->setApplication($this->app);
 		}
 
 		return array($class, $method);

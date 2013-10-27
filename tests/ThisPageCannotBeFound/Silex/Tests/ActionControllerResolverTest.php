@@ -11,6 +11,12 @@ use ThisPageCannotBeFound\Silex\ActionControllerResolver;
  */
 class ActionControllerResolverTest extends \PHPUnit_Framework_TestCase {
 
+	/** @var Application */
+	protected $app;
+
+	/** @var \Symfony\Component\HttpKernel\Controller\ControllerResolverInterface */
+	protected $resolver;
+
 	public function setup() {
 		$this->mockResolver = $this->getMockBuilder('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface')
 				->disableOriginalConstructor()
@@ -97,6 +103,21 @@ class ActionControllerResolverTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertInstanceOf($className, reset($resolved));
 		$this->assertEquals('example', next($resolved));
+	}
+
+	public function testApplicationAwareShouldSetApp() {
+		$this->app['some_service'] = Support\ApplicationAwareController::__CLASS;
+
+		$req = Request::create('/');
+		$req->attributes->set('_controller', 'some_service');
+		$req->attributes->set('action', 'example');
+
+		$resolved = $this->resolver->getController($req);
+
+		$controller = reset($resolved);
+		$controller instanceof Support\ApplicationAwareController;
+
+		$this->assertSame($this->app, $controller->app);
 	}
 
 }
