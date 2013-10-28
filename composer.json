@@ -1,11 +1,15 @@
 {
 	"name": "thispagecannotbefound/silex-action-controller",
+	"type": "library",
 	"description": "Service provider for extended (class-) controller functionality.",
+	"keywords": ["silex", "controller", "service", "provider"],
+	"homepage": "http://github.com/thispagecannotbefound/SilexActionController",
 	"license": "MIT",
 	"authors": [
 		{
 			"name": "Abel de Beer",
-			"email": "abel@thispagecannotbefound.com"
+			"email": "abel@thispagecannotbefound.com",
+			"homepage": "http://thispagecannotbefound.com"
 		}
 	],
 	"require": {
